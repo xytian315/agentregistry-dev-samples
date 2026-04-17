@@ -4,7 +4,7 @@ FROM $DOCKER_REGISTRY/kagent-dev/kagent/kagent-adk:$VERSION
 
 WORKDIR /app
 
-COPY agent/ agent/
+COPY agentdemo/ agentdemo/
 COPY pyproject.toml pyproject.toml
 COPY README.md README.md
 COPY .python-version .python-version
