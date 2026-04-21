@@ -1,0 +1,12 @@
+[project]
+name = "agentdemo"
+version = "0.1.0"
+description = "Dice-rolling sample ADK-Python agent."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+  "google-adk==1.25.1",
+  # Anthropic's SDK; its AnthropicBedrock client uses boto3 under the hood
+  # so no API key is needed on AgentCore or with an active SSO session.
+  "anthropic[bedrock]>=0.40",
+]
