@@ -5,12 +5,11 @@ description = "Dice-rolling sample ADK-Python agent."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-  "google-adk==1.25.1",
+  # google-adk imports a2a.server.apps at runtime; the [a2a] extra pulls in
+  # the compatible a2a-sdk range (>=0.3.4,<0.4.0). Without it AgentCore
+  # crashes with ModuleNotFoundError: No module named 'a2a.server.apps'.
+  "google-adk[a2a]==1.25.1",
   # Anthropic's SDK; its AnthropicBedrock client uses boto3 under the hood
   # so no API key is needed on AgentCore or with an active SSO session.
   "anthropic[bedrock]>=0.40",
-  # google-adk 1.25.1 imports a2a.server.apps at runtime but does not pull
-  # a2a-sdk in transitively; without this the AgentCore runtime crashes with
-  # ModuleNotFoundError.
-  "a2a-sdk>=0.2",
 ]
