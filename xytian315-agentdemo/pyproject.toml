@@ -5,10 +5,15 @@ description = "Dice-rolling sample ADK-Python agent."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-  # google-adk imports a2a.server.apps at runtime; the [a2a] extra pulls in
-  # the compatible a2a-sdk range (>=0.3.4,<0.4.0). Without it AgentCore
-  # crashes with ModuleNotFoundError: No module named 'a2a.server.apps'.
+  # google-adk's [a2a] extra pins a2a-sdk into the 0.3.x range where
+  # a2a.server.apps.A2AFastAPIApplication still exists. Required because the
+  # AgentCore deploy pipeline also injects kagent-adk, which imports that
+  # path; without this pin the resolver can still pick a2a-sdk 1.0 via
+  # kagent-adk's transitive deps and AgentCore crashes on startup.
   "google-adk[a2a]==1.25.1",
+  # Top-level pin so the upper bound wins over any transitive dep layered
+  # in by the deploy pipeline (kagent-adk currently has no upper bound).
+  "a2a-sdk>=0.3.4,<0.4.0",
   # Anthropic's SDK; its AnthropicBedrock client uses boto3 under the hood
   # so no API key is needed on AgentCore or with an active SSO session.
   "anthropic[bedrock]>=0.40",
