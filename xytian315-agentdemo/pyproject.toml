@@ -9,4 +9,8 @@ dependencies = [
   # Anthropic's SDK; its AnthropicBedrock client uses boto3 under the hood
   # so no API key is needed on AgentCore or with an active SSO session.
   "anthropic[bedrock]>=0.40",
+  # google-adk 1.25.1 imports a2a.server.apps at runtime but does not pull
+  # a2a-sdk in transitively; without this the AgentCore runtime crashes with
+  # ModuleNotFoundError.
+  "a2a-sdk>=0.2",
 ]
