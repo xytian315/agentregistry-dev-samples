@@ -1,14 +1,18 @@
-agentName: REPLACE_ME_NAME
-version: 0.1.0
-framework: adk
-language: python
-# Model auth is handled by the in-repo bedrock_model.py adapter using boto3
-# credentials — the SSO session locally, the workload identity on AgentCore.
-# No API keys.
-modelProvider: bedrock
-modelName: us.anthropic.claude-sonnet-4-5-20250929-v1:0
-description: Dice-rolling sample ADK-Python agent.
-# Set this to a registry path you can push to, e.g.
-#   ghcr.io/<your-github-user>/agentdemo:0.1.0
-image: REPLACE_ME
-mcpServers: []
+apiVersion: ar.dev/v1alpha1
+kind: Agent
+metadata:
+  name: REPLACE_ME_NAME
+  version: "0.1.0"
+spec:
+  # Set this to a registry path you can push to, e.g.
+  #   ghcr.io/<your-github-user>/agentdemo:0.1.0
+  image: REPLACE_ME
+  language: python
+  framework: adk
+  # Model auth is handled by the in-repo bedrock_model.py adapter using boto3
+  # credentials — the SSO session locally, the workload identity on AgentCore.
+  # No API keys.
+  modelProvider: bedrock
+  modelName: us.anthropic.claude-sonnet-4-5-20250929-v1:0
+  description: Dice-rolling sample ADK-Python agent.
+  mcpServers: []
