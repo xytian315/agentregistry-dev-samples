@@ -75,8 +75,9 @@ def _tools_param(llm_request: LlmRequest) -> list[dict]:
                 if fn.parameters
                 else {}
             )
-            schema.setdefault("type", "object")
-            schema.setdefault("properties", {})
+            schema["type"] = "object"
+            if "properties" not in schema:
+                schema["properties"] = {}
             out.append(
                 {
                     "name": fn.name,
