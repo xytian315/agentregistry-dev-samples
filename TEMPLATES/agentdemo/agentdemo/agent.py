@@ -4,6 +4,7 @@ import random
 from google.adk import Agent
 from google.adk.tools.tool_context import ToolContext
 
+from .mcp_tools import get_mcp_tools
 from .bedrock_model import BedrockClaude
 
 os.environ.setdefault("OTEL_SERVICE_NAME", "agentdemo")
@@ -46,14 +47,32 @@ async def check_prime(nums: list[int]) -> str:
 # Override at runtime with AGENT_MODEL if you want a different Claude.
 _MODEL_ID = os.environ.get("AGENT_MODEL", "us.anthropic.claude-sonnet-4-5-20250929-v1:0")
 
+mcp_tools = get_mcp_tools()
 root_agent = Agent(
     model=BedrockClaude(model=_MODEL_ID),
-    name="agentdemo_agent",
-    description="Dice-rolling sample agent.",
-    instruction=(
-        "You are a helpful assistant that can roll dice and answer questions "
-        "about prime numbers. When asked to roll a die, use the roll_die tool. "
-        "To check for primes, use the check_prime tool."
-    ),
-    tools=[roll_die, check_prime],
+    name="agentdemo":,
+    description="Dice-rolling sample ADK-Python agent",
+    instruction=build_instruction("""
+You roll dice and answer questions about the outcome of the dice rolls.
+You can roll dice of different sizes.
+You can use multiple tools in parallel by calling functions in parallel (in one request and in one round).
+It is ok to discuss previous dice roles, and comment on the dice rolls.
+When you are asked to roll a die, you must call the roll_die tool with the number of sides. Be sure to pass in an integer. Do not pass in a string.
+You should never roll a die on your own.
+When checking prime numbers, call the check_prime tool with a list of integers. Be sure to pass in a list of integers. You should never pass in a string.
+You should not check prime numbers before calling the tool.
+When you are asked to roll a die and check prime numbers, you should always make the following two function calls:
+1. You should first call the roll_die tool to get a roll. Wait for the function response before calling the check_prime tool.
+2. After you get the function response from roll_die tool, you should call the check_prime tool with the roll_die result.
+2.1 If user asks you to check primes based on previous rolls, make sure you include the previous rolls in the list.
+3. When you respond, you must include the roll_die result from step 1.
+You should always perform the previous 3 steps when asking for a roll and checking prime numbers.
+You should not rely on the previous history on prime results.
+
+
+    """),
+    tools=[
+        roll_die,
+        check_prime,
+    ] + (mcp_tools if mcp_tools else []),
 )
