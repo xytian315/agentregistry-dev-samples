@@ -46,7 +46,7 @@ async def check_prime(nums: list[int]) -> str:
 # Default: Bedrock-hosted Claude via the in-repo adapter. Uses boto3 creds
 # (SSO locally, workload identity on AgentCore) — no API keys.
 # Override at runtime with AGENT_MODEL if you want a different Claude.
-_MODEL_ID = os.environ.get("AGENT_MODEL", "us.anthropic.claude-sonnet-4-5-20250929-v1:0")
+_MODEL_ID = os.environ.get("AGENT_MODEL", "us.anthropic.claude-sonnet-4-6")
 
 mcp_tools = get_mcp_tools()
 root_agent = Agent(

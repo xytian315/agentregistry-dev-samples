@@ -13,7 +13,7 @@ spec:
   # credentials — the SSO session locally, the workload identity on AgentCore.
   # No API keys.
   modelProvider: bedrock
-  modelName: us.anthropic.claude-sonnet-4-5-20250929-v1:0
+  modelName: us.anthropic.claude-sonnet-4-6
   description: Dice-rolling sample ADK-Python agent.
   telemetryEndpoint: REPLACE_ME_OTEL_ENDPOINT
   mcpServers: []

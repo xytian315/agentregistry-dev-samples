@@ -150,7 +150,7 @@ class BedrockClaude(BaseLlm):
     workload identity). No API keys involved.
 
     Example:
-      model = BedrockClaude(model="us.anthropic.claude-sonnet-4-5-20250929-v1:0")
+      model = BedrockClaude(model="us.anthropic.claude-sonnet-4-6")
     """
 
     max_tokens: int = 4096
